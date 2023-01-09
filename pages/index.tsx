@@ -1,11 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "../styles/Home.module.css";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/bulbasaur`);
+  const data = await res.json();
+  console.log(data);
+
+  // Pass data to the page via props
+  return { props: { data } };
+}
+
+export default function Home({ data }: any) {
   return (
     <>
       <Head>
@@ -26,9 +36,9 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{' '}
+              By{" "}
               <Image
-                src="/vercel.svg"
+                src={data.sprites.front_default}
                 alt="Vercel Logo"
                 className={styles.vercelLogo}
                 width={100}
@@ -119,5 +129,5 @@ export default function Home() {
         </div>
       </main>
     </>
-  )
+  );
 }

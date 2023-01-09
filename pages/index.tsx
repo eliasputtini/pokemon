@@ -2,12 +2,13 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
+import Card from "./styles";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/bulbasaur`);
+  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/charizard`);
   const data = await res.json();
   console.log(data);
 
@@ -31,21 +32,11 @@ export default function Home({ data }: any) {
             <code className={styles.code}>pages/index.tsx</code>
           </p>
           <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{" "}
-              <Image
-                src={data.sprites.front_default}
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+            <Card
+              title={data.name}
+              imageUrl={data.sprites.front_default}
+              description="This is the card description."
+            />
           </div>
         </div>
 

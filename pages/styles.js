@@ -1,17 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 
+export const AppContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const Container = styled.div`
+  height: 600px;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  align-items: center;
+`;
+
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 300px;
+  min-width: 300px;
   height: 400px;
-  background-color: white;
+  background-color: wheat;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding: 20px;
+  margin: 20px;
 `;
 
 const CardTitle = styled.h3`

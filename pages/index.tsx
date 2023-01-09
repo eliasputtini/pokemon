@@ -7,16 +7,23 @@ import Card from "./styles";
 const inter = Inter({ subsets: ["latin"] });
 
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/charizard`);
-  const data = await res.json();
-  console.log(data);
+  const pokemons = await (
+    await fetch("https://pokeapi.co/api/v2/pokemon/?limit=3")
+  ).json();
+
+  const data = await Promise.all(
+    pokemons.results.map(
+      async (pokemon: any) => await (await fetch(pokemon.url)).json()
+    )
+  );
 
   // Pass data to the page via props
   return { props: { data } };
 }
 
 export default function Home({ data }: any) {
+  console.log(data);
+
   return (
     <>
       <Head>
@@ -32,11 +39,15 @@ export default function Home({ data }: any) {
             <code className={styles.code}>pages/index.tsx</code>
           </p>
           <div>
-            <Card
-              title={data.name}
-              imageUrl={data.sprites.front_default}
-              description="This is the card description."
-            />
+            {data.map((pokemon: any) => {
+              return (
+                <Card
+                  title={pokemon.name}
+                  imageUrl={pokemon.sprites.front_default}
+                  description="This is the card description."
+                />
+              );
+            })}
           </div>
         </div>
 
